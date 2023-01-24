@@ -18,20 +18,20 @@
  */
 function isAllTrue(array, fn) {
   if (typeof fn !== 'function') {
-  throw new Error('fn is not a function');
+    throw new Error('fn is not a function')
   }
 
-  if (!Array.isArray(array) || !array.length) {
-  throw new Error('empty array');
+  if (array instanceof Array == false || !array.length) {
+    throw new Error('empty array')
   }
 
-  for (const el of array) {
-  if (!fn(el)) {
-    return false;
+  for (let item of array){
+    if(!fn(item)) {
+      return false
     }
   }
 
-  return true;
+  return true
 }
 
 /*
@@ -52,20 +52,20 @@ function isAllTrue(array, fn) {
  */
 function isSomeTrue(array, fn) {
   if (typeof fn !== 'function') {
-    throw new Error('fn is not a function');
+    throw new Error('fn is not a function')
   }
 
-  if (!Array.isArray(array) || !array.length) {
-    throw new Error('empty array');
+  if (array instanceof Array == false || !array.length) {
+    throw new Error('empty array')
   }
 
-  for (const el of array) {
-    if (fn(el)) {
-      return true;
+  for (let item of array){
+    if(fn(item)) {
+      return true
     }
   }
 
-  return false;
+  return false
 }
 /*
  Задание 3:
@@ -80,20 +80,20 @@ function isSomeTrue(array, fn) {
  */
 function returnBadArguments(fn, ...args) {
   if (typeof fn !== 'function') {
-    throw new Error('fn is not a function');
+    throw new Error('fn is not a function')
   }
 
-  const bad = [];
+  let exception = []
 
-  for (const arg of args) {
+  for (let item of args){
     try {
-      fn(arg);
+      fn(item)
     } catch {
-      bad.push(arg);
+      exception.push(item)
     }
   }
 
-  return bad;
+  return exception
 }
 /*
  Задание 4:
@@ -114,51 +114,38 @@ function returnBadArguments(fn, ...args) {
  */
 function calculator(number = 0) {
   if (!Number.isFinite(number)) {
-    throw new Error('number is not a number');
+    throw new Error('number is not a number')
   }
 
-  return {
+  let calcObj = {}
+
+  calcObj = {
     sum(...args) {
-      let result = number;
-
-      for (const arg of args) {
-        result += arg;
-      }
-
-      return result;
+      let result = number
+      for (let item of args) {result += item}
+      return result
     },
     dif(...args) {
-      let result = number;
-
-      for (const arg of args) {
-        result -= arg;
-      }
-
-      return result;
-    },
+      let result = number
+      for (let item of args) {result -= item}
+      return result
+      },
     div(...args) {
-      let result = number;
-
-      for (const arg of args) {
-        if (arg === 0) {
-          throw new Error('division by 0');
-        }
-
-        result /= arg;
+      let result = number
+      for (let item of args) {
+        if (item == 0) {throw new Error('division by 0')}
+        result /= item
       }
-
-      return result;
-    },
+      return result
+      },
     mul(...args) {
-      let result = number;
-
-      for (const arg of args) {
-        result *= arg;
+      let result = number
+      for (let item of args) {result *= item}
+      return result
       }
+  }
 
-      return result;
-    },
-  };
+  return calcObj
 }
 /* При решении задач, постарайтесь использовать отладчик */
 
