@@ -3,8 +3,14 @@ const Storage = require('./storage')
 
 createServer()
 
-function readBody(req){
-
+function readBody(req) {
+    return new Promise((resolve, reject) => {
+        let dataRaw = '';
+    
+        req.on('data', (chunk) => (dataRaw += chunk));
+        req.on('error', reject);
+        req.on('end', () => resolve(JSON.parse(dataRaw)));
+      });
 }
 
 function end(res, data, statusCode = 200) {
@@ -35,6 +41,7 @@ function createServer() {
                 storage.add(body)
                 end(res, {ok: true})
             } else if (req.url === '/list') {
+                console.log(body);
                 end(res, storage.getByCoords(body.coords))
             } else {
                 end(res, {})
@@ -43,5 +50,5 @@ function createServer() {
             end(res, {error: {message: e.message}}, 500)
         }
     })
-    .listen(8181)
+    .listen(8182)
 }
